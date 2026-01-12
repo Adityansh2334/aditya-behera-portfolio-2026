@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Light theme (default) */
+:root {
+    --bg: #f8fafc;
+    --fg: #0f172a;
+    --card: #ffffff;
+    --border: #e5e7eb;
+    --muted: #475569;
+}
+
+/* Dark theme */
+.dark {
+    --bg: #0b0f14;
+    --fg: #e5e7eb;
+    --card: #111827;
+    --border: #1f2937;
+    --muted: #94a3b8;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--fg);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+* {
+    cursor: none;
+}
+.cursor-hover {
+    position: relative;
+    will-change: transform;
+}
+
+/* Disable native cursors globally (custom cursor only) */
+*,
+*::before,
+*::after {
+    cursor: none !important;
+}
+
+:focus-visible {
+    outline: 2px solid rgba(56, 189, 248, 0.8); /* cyan-400 */
+    outline-offset: 2px;
+}
+

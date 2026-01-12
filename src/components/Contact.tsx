@@ -143,13 +143,13 @@ export default function Contact() {
                         type="submit"
                         disabled={loading}
                         className="
-              cursor-hover
-              w-full py-3 rounded-xl
-              bg-gradient-to-r from-cyan-400 to-purple-500
-              text-black font-medium
-              hover:opacity-90 transition
-              disabled:opacity-50
-            "
+                          cursor-hover
+                          w-full py-3 rounded-xl
+                          bg-gradient-to-r from-cyan-400 to-purple-500
+                          text-black font-medium
+                          hover:opacity-90 transition
+                          disabled:opacity-50
+                        "
                     >
                         {loading ? "Sending..." : "Send Message"}
                     </button>

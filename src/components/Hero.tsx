@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import AnimatedText from "./AnimatedText";
 import { useEffect, useState } from "react";
+import LiveClock from "./LiveClock";
 
 /* ✅ Desktop-safe detection hook */
 function useDesktopEffects() {
@@ -16,26 +17,6 @@ function useDesktopEffects() {
     return enabled;
 }
 
-/* ✅ Live clock */
-function LiveClock() {
-    const [time, setTime] = useState(new Date());
-
-    useEffect(() => {
-        const timer = setInterval(() => setTime(new Date()), 1000);
-        return () => clearInterval(timer);
-    }, []);
-
-    return (
-        <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-                 bg-card/70 backdrop-blur border border-borderc
-                 text-sm font-mono text-muted"
-        >
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            {time.toLocaleTimeString()}
-        </div>
-    );
-}
 
 export default function Hero() {
     const enableEffects = useDesktopEffects();
@@ -48,21 +29,33 @@ export default function Hero() {
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
                 {/* LEFT CONTENT */}
+                {/* LEFT CONTENT */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="space-y-6"
+                    className="
+    space-y-6
+    flex flex-col
+    items-center md:items-start
+    text-center md:text-left
+  "
                 >
-                    <LiveClock />
+                    {/* Clock with mobile spacing */}
+                    <div className="mt-6 md:mt-0">
+                        <LiveClock />
+                    </div>
 
+
+                    {/* Heading */}
                     <h1 className="text-5xl font-bold leading-tight">
                         Hi, I am{" "}
                         <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
-              Aditya
-            </span>
+                          Aditya
+                        </span>
                     </h1>
 
+                    {/* Animated role */}
                     <p className="text-lg text-muted">
                         <AnimatedText />
                     </p>
@@ -83,7 +76,7 @@ export default function Hero() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.8 }}
-                        className="flex flex-wrap gap-3 pt-2"
+                        className="flex flex-wrap gap-3 pt-2 justify-center md:justify-start"
                     >
                         {[
                             "4.6+ Years Experience",
@@ -93,12 +86,12 @@ export default function Hero() {
                             <span
                                 key={item}
                                 className="px-4 py-1.5 rounded-full
-                           bg-card/60 backdrop-blur
-                           border border-borderc
-                           text-xs font-medium text-muted"
+                   bg-card/60 backdrop-blur
+                   border border-borderc
+                   text-xs font-medium text-muted"
                             >
-                {item}
-              </span>
+                            {item}
+                          </span>
                         ))}
                     </motion.div>
                 </motion.div>

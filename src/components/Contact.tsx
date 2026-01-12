@@ -6,6 +6,7 @@ import {
     FaXTwitter,
 } from "react-icons/fa6";
 import ContactParticles from "./ContactParticles";
+import { useState } from "react";
 
 const socials = [
     {
@@ -35,6 +36,40 @@ const socials = [
 ];
 
 export default function Contact() {
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState("");
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError("");
+        setSuccess(false);
+
+        try {
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, message }),
+            });
+
+            if (!res.ok) throw new Error("Failed");
+
+            setSuccess(true);
+            setName("");
+            setEmail("");
+            setMessage("");
+        } catch {
+            setError("Something went wrong. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <section
             id="contact"
@@ -45,8 +80,10 @@ export default function Contact() {
             </h2>
 
             <div className="grid md:grid-cols-2 gap-12 relative">
+
                 {/* LEFT — CONTACT FORM */}
                 <motion.form
+                    onSubmit={handleSubmit}
                     initial={{ opacity: 0, x: -40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -60,6 +97,9 @@ export default function Contact() {
                         </label>
                         <input
                             type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
                             className="w-full px-4 py-3 rounded-lg bg-transparent
                          border border-borderc focus:outline-none
                          focus:border-cyan-400 transition"
@@ -73,6 +113,9 @@ export default function Contact() {
                         </label>
                         <input
                             type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
                             className="w-full px-4 py-3 rounded-lg bg-transparent
                          border border-borderc focus:outline-none
                          focus:border-cyan-400 transition"
@@ -86,6 +129,9 @@ export default function Contact() {
                         </label>
                         <textarea
                             rows={4}
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            required
                             className="w-full px-4 py-3 rounded-lg bg-transparent
                          border border-borderc focus:outline-none
                          focus:border-cyan-400 transition"
@@ -95,14 +141,30 @@ export default function Contact() {
 
                     <button
                         type="submit"
-                        className="w-full py-3 rounded-full
-                       bg-gradient-to-r from-cyan-400 to-purple-500
-                       text-black font-medium
-                       hover:shadow-lg hover:shadow-cyan-500/30
-                       transition-all duration-300"
+                        disabled={loading}
+                        className="
+              cursor-hover
+              w-full py-3 rounded-xl
+              bg-gradient-to-r from-cyan-400 to-purple-500
+              text-black font-medium
+              hover:opacity-90 transition
+              disabled:opacity-50
+            "
                     >
-                        Send Message
+                        {loading ? "Sending..." : "Send Message"}
                     </button>
+
+                    {success && (
+                        <p className="text-emerald-400 text-sm mt-2">
+                            Message sent successfully!
+                        </p>
+                    )}
+
+                    {error && (
+                        <p className="text-red-400 text-sm mt-2">
+                            {error}
+                        </p>
+                    )}
                 </motion.form>
 
                 {/* RIGHT — MESSAGE + SOCIAL CARDS */}
@@ -114,10 +176,8 @@ export default function Contact() {
                     className="relative bg-card/60 backdrop-blur
                      border border-borderc rounded-2xl p-8 overflow-hidden"
                 >
-                    {/* Background particles */}
                     <ContactParticles />
 
-                    {/* Message */}
                     <div className="relative z-10 mb-8">
                         <h3 className="text-xl font-semibold mb-2">
                             Let’s build something great 🚀
@@ -128,7 +188,6 @@ export default function Contact() {
                         </p>
                     </div>
 
-                    {/* Social cards */}
                     <div className="relative z-10 grid grid-cols-2 gap-6">
                         {socials.map((item) => (
                             <motion.a
@@ -152,6 +211,7 @@ export default function Contact() {
                         ))}
                     </div>
                 </motion.div>
+
             </div>
         </section>
     );

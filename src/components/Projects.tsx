@@ -7,7 +7,7 @@ const projects = [
         description:
             "Full-stack education platform with dynamic content management, admin panel, and AWS deployment.",
         tech: ["Angular", "Spring Boot", "AWS", "Tailwind"],
-        github: "https://github.com/your-github/emrs-project",
+        github: "https://github.com/Adityansh2334/emrs-saladahara-website-official",
         live: "https://www.emrssaladahara.com",
     },
     {
@@ -15,7 +15,7 @@ const projects = [
         description:
             "AI-powered document processing system using NLP for extracting structured data from PDFs.",
         tech: ["Java", "Spring Boot", "NLP", "Docker"],
-        github: "https://github.com/your-github/ai-pdf-processor",
+        github: "https://github.com/Adityansh2334/pdfUtilityAI",
         live: "",
     },
 ];

@@ -9,6 +9,7 @@
     --card: #ffffff;
     --border: #e5e7eb;
     --muted: #475569;
+    --vh: 100%;
 }
 
 /* Dark theme */
@@ -29,23 +30,54 @@ body {
     color: var(--fg);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-* {
-    cursor: none;
+/* ===== Custom Cursor Control ===== */
+
+/* Desktop only: hide native cursor */
+@media (hover: hover) and (pointer: fine) {
+    html, body {
+        cursor: none;
+    }
 }
+
+/* Mobile & touch devices: force native behavior */
+@media (hover: none) and (pointer: coarse) {
+    html, body {
+        cursor: auto !important;
+    }
+
+    * {
+        cursor: auto !important;
+    }
+}
+
+/* Elements that interact with custom cursor */
 .cursor-hover {
     position: relative;
     will-change: transform;
 }
 
-/* Disable native cursors globally (custom cursor only) */
-*,
-*::before,
-*::after {
-    cursor: none !important;
-}
-
+/* Accessibility */
 :focus-visible {
     outline: 2px solid rgba(56, 189, 248, 0.8); /* cyan-400 */
     outline-offset: 2px;
 }
+
+@supports (height: 100dvh) {
+    :root {
+        --vh: 100dvh;
+    }
+}
+.mask-ring {
+    mask-image: radial-gradient(
+            circle,
+            transparent 55%,
+            black 60%
+    );
+    -webkit-mask-image: radial-gradient(
+            circle,
+            transparent 55%,
+            black 60%
+    );
+}
+
 

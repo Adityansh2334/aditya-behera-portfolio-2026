@@ -1,7 +1,20 @@
 import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { useUI } from "../context/UIContext";
 
 export default function ResumeViewer({ onClose }: { onClose: () => void }) {
     const fileId = "14llYbN33-3fJakhkL88vJ2yaFnx8BNCl";
+    const { setModalOpen } = useUI();
+
+    useEffect(() => {
+        setModalOpen(true);
+        document.body.style.overflow = "hidden";
+
+        return () => {
+            setModalOpen(false);
+            document.body.style.overflow = "auto";
+        };
+    }, [setModalOpen]);
 
     return (
         <motion.div
